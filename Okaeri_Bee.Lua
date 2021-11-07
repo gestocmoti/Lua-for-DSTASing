@@ -12,7 +12,7 @@ local i,j,k
 			arr[ID] = memory.readdword(base-40)
 			
 			--該当アドレスの蜂が倒されている場合、IDを1減らしておく。
-			if memory.readdword(base-28) == 0x1000 then
+			if memory.readdword(base-28) ~= 0x2000 then
 				ID = ID-1
 			end
 			
