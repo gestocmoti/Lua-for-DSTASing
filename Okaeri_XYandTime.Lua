@@ -19,6 +19,9 @@ local flag
 	time = memory.readdword(0x02395528)
 	re = movie.rerecordcount()
 	flag = memory.readdword(0x02392958)
+	h=0
+	m=0
+	s=0
 
 	RNG1 = bit.tohex(RNG1)
 	RNG2 = bit.tohex(RNG2)
@@ -40,13 +43,24 @@ local flag
 		gui.text(35,-96,""..h)
 		gui.text(47,-96,":"..m)
 		gui.text(65,-96,":"..s)
+	elseif time >= 0x44800000 then
+		time = 0x44870000 -  memory.readdword(0x02395528)
+		IGT = (memory.readdword(0x02395528)- 0x44160000) /0x2000
+		h =  math.floor( IGT/60 +3)
+		m = math.floor( IGT % 60 -4)
+		s = math.floor( IGT * 60 % 60)
+	 	gui.text(0,10,string.format("Time: %d %df",time,(time+time*0.5*flag)*2/437))
+		gui.text(35,-96,""..h)
+		gui.text(47,-96,":"..m)
+		gui.text(65,-96,":"..s)
+		gui.text(0,10,"Time: "..time)	
 	else
 		time = 0x44870000 -  memory.readdword(0x02395528)
 		IGT = (memory.readdword(0x02395528)- 0x44160000) /0x4000
 		h =  math.floor( IGT/60+10)
 		m = math.floor( IGT % 60)
 		s = math.floor( IGT * 60 % 60)
-	 	gui.text(0,10,string.format("Time: %d %df",time,(time+time*0.5*flag)*2/874))
+	 	gui.text(0,10,string.format("Time: %d %df",time,(time+time*0.5*flag)*2/823))
 		gui.text(35,-96,""..h)
 		gui.text(47,-96,":"..m)
 		gui.text(65,-96,":"..s)
